@@ -1,3 +1,0 @@
-/home/achraf/CLionProjects/SimpleDijkstra/cmake-build-debug/CMakeFiles/SimpleDijkstra.dir
-/home/achraf/CLionProjects/SimpleDijkstra/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/achraf/CLionProjects/SimpleDijkstra/cmake-build-debug/CMakeFiles/rebuild_cache.dir
