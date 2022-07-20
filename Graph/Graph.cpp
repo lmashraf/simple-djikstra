@@ -2,15 +2,14 @@
 // Created by achraf on 19.07.22.
 //
 
-#include <queue>
-#include <limits>
-
 #include "Graph.h"
 
-Graph::Graph( std::vector< Edge >& edges, int size ) : edges( edges ), size( size )
+Graph::Graph( std::vector< Edge >& edges, int graphSize ) : edges( edges ), graphSize( graphSize )
 {
-    adjacentList.resize(size);
+    // Resize the adjacent list vector
+    adjacentList.resize( graphSize );
 
+    // Add edges to the graph
     for( auto& edge : edges )
     {
         int source = edge.source;
@@ -18,20 +17,33 @@ Graph::Graph( std::vector< Edge >& edges, int size ) : edges( edges ), size( siz
         int weight = edge.responseTime;
 
         // Insert at the end
-        adjacentList[source].push_back( std::make_pair(destination, weight ) );
-        adjacentList[destination].push_back( std::make_pair(source, weight ) );
+        adjacentList[source].push_back( edge );
+        // adjacentList[destination].push_back( edge );
     }
+}
+//----------------------------------------------------------------------------------------------------------------------
+void Graph::addEdge(const Edge edge )
+{
+    // Resize
+    adjacentList.resize(++graphSize );
+
+    // Insert at the end
+    adjacentList[ edge.source ].push_back( edge  );
+    adjacentList[ edge.destination ].push_back( edge );
+
+    // Add to the edges' list
+    edges.push_back(edge);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void Graph::printGraph( )
+void Graph::printGraphBySourceNode( ) const
 {
-    for( int i = 0; i < size - 1 ; ++i )
+    for(int i = 0; i < graphSize - 1 ; ++i )
     {
-        std::cout << "#SRC('node-" << i << "')" << std::endl;
-        for ( Node v: adjacentList[ i ] )
+        std::cout << "# SRC('node-" << i << "')" << std::endl;
+        for ( Edge e: adjacentList[ i ] )
         {
-            std::cout << "\tDEST('node-" << v.first << "') with a response time of: " << v.second << "ms." << std::endl;
+            std::cout << "\tDEST('node-" << e.destination << "') with a response time of: " << e.responseTime << "ms." << std::endl;
         }
         std::cout << std::endl ;
     }
@@ -39,21 +51,7 @@ void Graph::printGraph( )
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void Graph::addEdge( Edge edge )
-{
-    // Resize
-    adjacentList.resize(++size );
-
-    // Insert at the end
-    adjacentList[ edge.source ].push_back( std::make_pair( edge.destination, edge.responseTime ) );
-    adjacentList[ edge.destination ].push_back( std::make_pair( edge.source, edge.responseTime ) );
-
-    // Add to the edges' list
-    edges.push_back(edge);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-void Graph::listAllNodes()
+void Graph::listAllNodes( ) const
 {
     // Header
     std::cout
@@ -73,20 +71,21 @@ void Graph::listAllNodes()
     }
 }
 //----------------------------------------------------------------------------------------------------------------------
-void Graph::shortestPath( int startNode, int endNode )
+void Graph::shortestPath( int sourceNode, int destinationNode )
 {
     // Create a Min-Heap using STL Priority Queue
-    std::priority_queue< Node, std::vector< Node >, std::greater< Node > > minHeap;
+    std::priority_queue< Node, std::vector< Node >, std::greater< > > minHeap;
 
-    minHeap.push( { startNode, 0 } );
+    minHeap.push( Node(sourceNode, 0));
 
     // Distance from startNode to endNode set to Infinity
-    std::vector<int> distance( endNode, INTMAX_MAX );
+    std::vector<int> distance( destinationNode, INTMAX_MAX );
 
-    // Distance from startNode to itself is 0
-    distance[startNode] = 0;
+    // Distance from sourceNode to itself is 0
+    distance[sourceNode] = 0;
 
     // Track vertices for which minimum cost is found
+    std::vector<bool> isVisited(graphSize, false);
 
     // Store predecessor of a vertex to a path
 

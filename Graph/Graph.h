@@ -1,27 +1,17 @@
 //
 // Created by achraf on 19.07.22.
 //
+#ifndef _GRAPH_H
+#define _GRAPH_H
+
+#include "Edge.h"
+#include "Node.h"
 
 #include <iostream>
 #include <vector>
 #include <iomanip>
 #include <string>
-
-#ifndef SIMPLEDIJKSTRA_GRAPH_H
-#define SIMPLEDIJKSTRA_GRAPH_H
-
-//----------------------------------------------------------------------------------------------------------------------
-// Edge
-struct Edge
-{
-    int source;         // Source node
-    int destination;    // Destination node
-    int responseTime;   // Weight
-};
-
-//----------------------------------------------------------------------------------------------------------------------
-// Link
-using Node = std::pair<int, int>;   // Node is defined by the pair destination node and its weight/cost
+#include <queue>
 
 //----------------------------------------------------------------------------------------------------------------------
 // Graph
@@ -29,19 +19,20 @@ class Graph
 {
 private:
     std::vector< Edge > edges;
-    std::vector< std::vector< Node > > adjacentList;
-    int size;
+    std::vector< std::vector< Edge > > adjacentList;
+    int graphSize;
 
 public:
-    Graph( std::vector< Edge >& edges, int size );
+    Graph( std::vector< Edge >& edges, int graphSize );
 
 public:
-    void addEdge( Edge edge );
-    void listAllNodes( );
-    void printGraph( );
-    void shortestPath( int startNode, int endNode );
+    void addEdge(const Edge edge );
+
+    void listAllNodes( ) const;
+    void printGraphBySourceNode( ) const;
+    void shortestPath( int sourceNode, int destinationNode );
 };
 
 #endif
 
-//SIMPLEDIJKSTRA_GRAPH_H
+//_GRAPH_H
