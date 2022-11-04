@@ -14,25 +14,23 @@
 #include <queue>
 
 //----------------------------------------------------------------------------------------------------------------------
-// Graph
 class Graph
 {
-private:
-    std::vector< Edge > edges;
-    std::vector< std::vector< Edge > > adjacentList;
-    int graphSize;
+    private:
+        std::vector< Edge > edges;
+        std::vector< std::vector< Edge > > adjacentList;
+        int graphSize;
 
-public:
-    Graph( std::vector< Edge >& edges, int graphSize );
+    public:
+        Graph( std::vector< Edge >& edges, int graphSize );
 
-public:
-    void addEdge(const Edge edge );
+    public:
+        void addEdge(const Edge& edge );
 
-    void listAllNodes( ) const;
-    void printGraphBySourceNode( ) const;
-    void shortestPath( int sourceNode, int destinationNode );
+        void listAllNodes( ) const;
+        void printGraphBySourceNode( ) const;
+        void shortestPath( int sourceNode, int destinationNode );
 };
 
-#endif
-
-//_GRAPH_H
+//----------------------------------------------------------------------------------------------------------------------
+#endif //_GRAPH_H

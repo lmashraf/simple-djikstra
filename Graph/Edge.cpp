@@ -4,6 +4,10 @@
 
 #include "Edge.h"
 
-Edge::Edge(int source, int destination, int responseTime)  :
-        source(source), destination(destination), responseTime(responseTime)
-{}
+Edge::Edge( int source, int destination, int responseTime ) :
+        source( source ),
+        destination( destination ),
+        responseTime( responseTime )
+{ }
+
+//----------------------------------------------------------------------------------------------------------------------
