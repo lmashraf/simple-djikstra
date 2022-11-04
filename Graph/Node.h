@@ -5,16 +5,25 @@
 #ifndef _NODE_H
 #define _NODE_H
 
-
+//----------------------------------------------------------------------------------------------------------------------
 class Node
 {
-public:
-    int vertex;
-    int responseTime;
-public:
-    Node(int vertex, int responseTime);
-    friend bool operator>(const Node& n1, const Node& n2);
+    public:
+        int vertex;
+        int responseTime;
+    public:
+        Node( int vertex, int responseTime );
+
 };
 
+class NodeIncreasingComparator
+{
+    public:
+    bool operator( ) ( const Node& lhs, const Node& rhs ) const
+    {
+        return lhs.responseTime > rhs.responseTime;
+    }
+};
 
+//----------------------------------------------------------------------------------------------------------------------
 #endif //_NODE_H
